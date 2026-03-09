@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query"
 import { SearchInput } from "./ui/SearchInput"
 import { Container } from "@mui/material"
+import { filmService } from "./api/films.service"
 
 export const ShowSearch = () => {
   const { data } = useQuery({
     queryKey: ['films'],
-    queryFn: () => fetch('https://swapi.dev/api/films/').then(res => res.json())
+    queryFn: () => filmService.getFilms()
   })
-  console.log(data.results)
+  
   return (
     <Container>
       <SearchInput inputValue={""} setInputValue={() => {}} />
