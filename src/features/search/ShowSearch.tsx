@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
-import { SearchInput } from "./ui/SearchInput"
 import { Container } from "@mui/material"
-import { filmService } from "./api/films.service"
+import { filmService } from "@/features/search/api"
+import { SearchInput } from "@/features/search/ui"
 
 export const ShowSearch = () => {
   const { data } = useQuery({

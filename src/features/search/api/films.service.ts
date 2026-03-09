@@ -8,6 +8,15 @@ class FilmService {
     const res = await axios.get<FilmsResponse>(this.baseUrl)
     return res.data;
   }
+
+  async getFilmsBySearch(search: string): Promise<FilmsResponse> {
+    const res = await axios.get<FilmsResponse>(this.baseUrl, {
+      params: {
+        search,
+      }
+    })
+    return res.data;
+  }
 }
 
 export const filmService = new FilmService();
