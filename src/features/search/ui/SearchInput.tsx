@@ -1,0 +1,20 @@
+import { Button, Stack, TextField } from "@mui/material"
+import type { ChangeEvent } from "react"
+
+export const SearchInput = ({inputValue, setInputValue}: {inputValue: string, setInputValue: (value: string) => void}) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value)
+  }
+  return (
+    <Stack spacing={2} direction={{ xs: "column", sm: "row" }}>
+      <TextField 
+        fullWidth
+        label="Type text to search..." 
+        variant="outlined" 
+        value={inputValue}
+        onChange={handleInputChange}
+      /> 
+      <Button variant="outlined">Search</Button>
+    </Stack>
+  )
+}
