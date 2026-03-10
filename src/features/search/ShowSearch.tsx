@@ -1,8 +1,18 @@
 import { useQuery } from "@tanstack/react-query"
-import { Container } from "@mui/material"
+import {
+  Card,
+  CardContent,
+  Container,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Stack,
+  Typography,
+} from "@mui/material"
 import { filmService } from "@/features/search/api"
 import type { Film } from "@/features/search/api"
-import { SearchInput } from "@/features/search/ui"
+import { SearchInput, SelectedFilm } from "@/features/search/ui"
 import { useState } from "react"
 
 export const ShowSearch = () => {
@@ -15,22 +25,12 @@ export const ShowSearch = () => {
     staleTime: 1000 * 60 * 10
   })
 
-  const {
-    data: selectedFilm,
-    isLoading: isSelectedFilmLoading,
-    isError: selectedFilmError,
-  } = useQuery({
-    queryKey: ['details', selectedFilmUrl],
-    queryFn: () => filmService.getFilmByUrl(selectedFilmUrl || ''),
-    staleTime: 1000 * 60 * 10,
-  })
-
   const films = data?.results ?? []
   const normalizedInput = inputValue.trim().toLowerCase()
 
   let filteredFilms: Film[] = []
 
-  if (normalizedInput && films) {
+  if (normalizedInput) {
     filteredFilms = films
       .filter((film) =>
           film.title.toLowerCase().includes(normalizedInput) ||
@@ -39,28 +39,41 @@ export const ShowSearch = () => {
       .slice(0, 6)
   }
 
-  if (isLoading) {
-    return (
-      <Container>
-        <div>Loading...</div>
-      </Container>
-    )
-  }
-
-  if (isError) {
-    return (
-      <Container>
-        <div>Error occurred while fetching films</div>
-      </Container>
-    )
-  }
-
   return (
     <Container>
-      <SearchInput inputValue={inputValue} setInputValue={setInputValue} />
-      {filteredFilms.map((film) => (
-        <div key={film.title}>{film.title}</div>
-      ))}
+        {isError && <Typography>Failed to load films</Typography>}
+
+        {isLoading ? <Typography>Loading...</Typography> :
+          <Stack >
+            <SearchInput inputValue={inputValue} setInputValue={setInputValue} />
+
+            {!isLoading && !isError && normalizedInput && filteredFilms.length > 0 && (
+              <Card variant="outlined" sx={{ mt: 2 }}>
+                <CardContent >
+                  <List>
+                    {filteredFilms.map((film) => (
+                      <ListItem key={film.url} >
+                        <ListItemButton
+                          selected={selectedFilmUrl === film.url}
+                          onClick={() => setSelectedFilmUrl(film.url)}
+                        >
+                          <ListItemText
+                            primary={film.title}
+                            secondary={`Episode ${film.episode_id}`}
+                          />
+                        </ListItemButton>
+                      </ListItem>
+                    ))}
+                  </List>
+                </CardContent>
+              </Card>
+            )}
+
+            {!isLoading && !isError && (
+              <SelectedFilm selectedFilmUrl={selectedFilmUrl} />
+            )}
+          </Stack>
+      }
     </Container>
   )
 }
