@@ -8,15 +8,25 @@ import { useState } from "react"
 export const ShowSearch = () => {
   const [inputValue, setInputValue] = useState('')
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ['films'],
     queryFn: () => filmService.getFilms(),
     staleTime: 1000 * 60 * 10
   })
 
-  const films = data?.results
-  const normalizedInput = inputValue.trim().toLowerCase()
+  const {
+    data: selectedFilm,
+    isLoading: isSelectedFilmLoading,
+    isError: selectedFilmError,
+  } = useQuery({
+    queryKey: ['details'],
+    queryFn: () => filmService.getFilmByUrl('https://swapi.dev/api/films/1/'),
+    staleTime: 1000 * 60 * 10,
+  })
 
+  const films = data?.results ?? []
+  const normalizedInput = inputValue.trim().toLowerCase()
+console.log(films)
   let filteredFilms: Film[] = []
 
   if (normalizedInput && films) {
@@ -36,7 +46,7 @@ export const ShowSearch = () => {
     )
   }
 
-  if (error) {
+  if (isError) {
     return (
       <Container>
         <div>Error occurred while fetching films</div>
@@ -46,6 +56,7 @@ export const ShowSearch = () => {
 
   return (
     <Container>
+      <div>{selectedFilm?.title}</div>
       <SearchInput inputValue={inputValue} setInputValue={setInputValue} />
       {filteredFilms.map((film) => (
         <div key={film.title}>{film.title}</div>
