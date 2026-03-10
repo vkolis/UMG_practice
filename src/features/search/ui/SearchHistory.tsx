@@ -1,9 +1,10 @@
 import { styled } from '@mui/material/styles';
 import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
+import type { SearchHistoryItem } from "@/shared/hooks/useShowSearchState"
 
 interface SearchHistoryProps {
-  items: Array<{ id: number; url: string; title: string }>;
+  items: SearchHistoryItem[];
   onDelete: (id: number) => void;
   onSelect: (url: string) => void;
 }
