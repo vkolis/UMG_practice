@@ -10,6 +10,7 @@ export const SelectedFilm = ({ selectedFilmUrl }: SelectedFilmProps) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['details', selectedFilmUrl],
     queryFn: () => filmService.getFilmByUrl(selectedFilmUrl),
+    enabled: Boolean(selectedFilmUrl),
     staleTime: 1000 * 60 * 10,
   })
 
