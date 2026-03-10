@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
-import { Container } from "@mui/material"
+import { Button, Container, Stack, Typography } from "@mui/material"
 import { filmService } from "@/features/search/api"
 import type { Film } from "@/features/search/api"
-import { SearchInput } from "@/features/search/ui"
+import { SearchInput, SelectedFilm } from "@/features/search/ui"
 import { useState } from "react"
 
 export const ShowSearch = () => {
@@ -15,22 +15,12 @@ export const ShowSearch = () => {
     staleTime: 1000 * 60 * 10
   })
 
-  const {
-    data: selectedFilm,
-    isLoading: isSelectedFilmLoading,
-    isError: selectedFilmError,
-  } = useQuery({
-    queryKey: ['details', selectedFilmUrl],
-    queryFn: () => filmService.getFilmByUrl(selectedFilmUrl || ''),
-    staleTime: 1000 * 60 * 10,
-  })
-
   const films = data?.results ?? []
   const normalizedInput = inputValue.trim().toLowerCase()
 
   let filteredFilms: Film[] = []
 
-  if (normalizedInput && films) {
+  if (normalizedInput) {
     filteredFilms = films
       .filter((film) =>
           film.title.toLowerCase().includes(normalizedInput) ||
@@ -39,28 +29,28 @@ export const ShowSearch = () => {
       .slice(0, 6)
   }
 
-  if (isLoading) {
-    return (
-      <Container>
-        <div>Loading...</div>
-      </Container>
-    )
-  }
-
-  if (isError) {
-    return (
-      <Container>
-        <div>Error occurred while fetching films</div>
-      </Container>
-    )
-  }
-
   return (
     <Container>
-      <SearchInput inputValue={inputValue} setInputValue={setInputValue} />
-      {filteredFilms.map((film) => (
-        <div key={film.title}>{film.title}</div>
-      ))}
+        {isError && <Typography>Failed to load films</Typography>}
+
+        {isLoading ? <Typography>Loading...</Typography> : 
+        
+        <Stack spacing={2}>
+          <SearchInput inputValue={inputValue} setInputValue={setInputValue} />
+
+          {filteredFilms.map((film) => (
+            <Button
+              key={film.url}
+              variant={selectedFilmUrl === film.url ? "contained" : "outlined"}
+              onClick={() => setSelectedFilmUrl(film.url)}
+            >
+              {film.title}
+            </Button>
+          ))}
+
+          <SelectedFilm selectedFilmUrl={selectedFilmUrl} />
+        </Stack>
+      }
     </Container>
   )
 }
