@@ -1,18 +1,25 @@
-import type { ReactElement } from "react"
-import { describe, expect, it } from "vitest"
-
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { renderToStaticMarkup } from "react-dom/server"
 import { ShowSearch } from "./ShowSearch"
-import { SearchInput } from "./ui/SearchInput"
-
-type SearchInputProps = {
-  inputValue: string
-  setInputValue: (value: string) => void
-}
 
 describe("ShowSearch", () => {
-  it("renders SearchInput", () => {
-    const element = ShowSearch() as ReactElement<SearchInputProps, typeof SearchInput>
+  it("renders SearchInput when films data is available", () => {
+    const queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false,
+        },
+      },
+    })
 
-    expect(element.type).toBe(SearchInput)
+    queryClient.setQueryData(["films"], { results: [] })
+
+    const html = renderToStaticMarkup(
+      <QueryClientProvider client={queryClient}>
+        <ShowSearch />
+      </QueryClientProvider>,
+    )
+
+    expect(html).toContain("Type text to search...")
   })
 })

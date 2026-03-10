@@ -47,7 +47,7 @@ export const ShowSearch = () => {
           <Stack >
             <SearchInput inputValue={inputValue} setInputValue={setInputValue} />
 
-            {!isLoading && !isError && normalizedInput && (
+            {!isLoading && !isError && normalizedInput && filteredFilms.length > 0 && (
               <Card variant="outlined" sx={{ mt: 2 }}>
                 <CardContent >
                   <List>
