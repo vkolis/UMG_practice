@@ -7,6 +7,7 @@ import { useState } from "react"
 
 export const ShowSearch = () => {
   const [inputValue, setInputValue] = useState('')
+  const [selectedFilmUrl, setSelectedFilmUrl] = useState<string>('')
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['films'],
@@ -19,14 +20,14 @@ export const ShowSearch = () => {
     isLoading: isSelectedFilmLoading,
     isError: selectedFilmError,
   } = useQuery({
-    queryKey: ['details'],
-    queryFn: () => filmService.getFilmByUrl('https://swapi.dev/api/films/1/'),
+    queryKey: ['details', selectedFilmUrl],
+    queryFn: () => filmService.getFilmByUrl(selectedFilmUrl || ''),
     staleTime: 1000 * 60 * 10,
   })
 
   const films = data?.results ?? []
   const normalizedInput = inputValue.trim().toLowerCase()
-console.log(films)
+
   let filteredFilms: Film[] = []
 
   if (normalizedInput && films) {
@@ -56,7 +57,6 @@ console.log(films)
 
   return (
     <Container>
-      <div>{selectedFilm?.title}</div>
       <SearchInput inputValue={inputValue} setInputValue={setInputValue} />
       {filteredFilms.map((film) => (
         <div key={film.title}>{film.title}</div>
