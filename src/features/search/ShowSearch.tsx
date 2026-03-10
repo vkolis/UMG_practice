@@ -19,6 +19,7 @@ import { useState } from "react"
 export const ShowSearch = () => {
   const [inputValue, setInputValue] = useState('')
   const [selectedFilmUrl, setSelectedFilmUrl] = useState<string>('')
+  const [history, setHistory] = useState<Array<{ url: string; title: string }>>([]);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['films'],
@@ -41,13 +42,26 @@ export const ShowSearch = () => {
       .slice(0, 6)
   }
 
+  const handleFilmClick = (film: Film) => {
+  setSelectedFilmUrl(film.url);
+
+  setHistory((prev) => {
+    const withoutCurrent = prev.filter((f) => f.url !== film.url);
+    return [{ url: film.url, title: film.title }, ...withoutCurrent].slice(0, 5);
+  });
+  };
+
   return (
     <Container>
         {isError && <Typography>Failed to load films</Typography>}
         {isLoading ? <Typography>Loading...</Typography> :
           <Stack >
-            <SearchHistory />
-            
+            <SearchHistory 
+              items={history}
+              onDelete={(url) => setHistory((prev) => prev.filter((f) => f.url !== url))}
+              onSelect={(url) => setSelectedFilmUrl(url)}
+            />
+                        
             <SearchInput inputValue={inputValue} setInputValue={setInputValue} />
 
             {!isLoading && !isError && normalizedInput && filteredFilms.length > 0 && (
@@ -58,7 +72,7 @@ export const ShowSearch = () => {
                       <ListItem key={film.url} >
                         <ListItemButton
                           selected={selectedFilmUrl === film.url}
-                          onClick={() => setSelectedFilmUrl(film.url)}
+                          onClick={() => handleFilmClick(film)}
                         >
                           <ListItemText
                             primary={film.title}
