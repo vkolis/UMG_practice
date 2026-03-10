@@ -13,7 +13,7 @@ import {
 import { filmService } from "@/features/search/api"
 import type { Film } from "@/features/search/api"
 import { useDebounce } from "@/shared/hooks"
-import { SearchInput, SelectedFilm } from "@/features/search/ui"
+import { SearchHistory, SearchInput, SelectedFilm } from "@/features/search/ui"
 import { useState } from "react"
 
 export const ShowSearch = () => {
@@ -44,9 +44,10 @@ export const ShowSearch = () => {
   return (
     <Container>
         {isError && <Typography>Failed to load films</Typography>}
-
         {isLoading ? <Typography>Loading...</Typography> :
           <Stack >
+            <SearchHistory />
+            
             <SearchInput inputValue={inputValue} setInputValue={setInputValue} />
 
             {!isLoading && !isError && normalizedInput && filteredFilms.length > 0 && (
