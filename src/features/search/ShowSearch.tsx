@@ -1,5 +1,15 @@
 import { useQuery } from "@tanstack/react-query"
-import { Button, Container, Stack, Typography } from "@mui/material"
+import {
+  Card,
+  CardContent,
+  Container,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Stack,
+  Typography,
+} from "@mui/material"
 import { filmService } from "@/features/search/api"
 import type { Film } from "@/features/search/api"
 import { SearchInput, SelectedFilm } from "@/features/search/ui"
@@ -33,23 +43,36 @@ export const ShowSearch = () => {
     <Container>
         {isError && <Typography>Failed to load films</Typography>}
 
-        {isLoading ? <Typography>Loading...</Typography> : 
-        
-        <Stack spacing={2}>
-          <SearchInput inputValue={inputValue} setInputValue={setInputValue} />
+        {isLoading ? <Typography>Loading...</Typography> :
+          <Stack >
+            <SearchInput inputValue={inputValue} setInputValue={setInputValue} />
 
-          {filteredFilms.map((film) => (
-            <Button
-              key={film.url}
-              variant={selectedFilmUrl === film.url ? "contained" : "outlined"}
-              onClick={() => setSelectedFilmUrl(film.url)}
-            >
-              {film.title}
-            </Button>
-          ))}
+            {!isLoading && !isError && normalizedInput && (
+              <Card variant="outlined" sx={{ mt: 2 }}>
+                <CardContent >
+                  <List>
+                    {filteredFilms.map((film) => (
+                      <ListItem key={film.url} >
+                        <ListItemButton
+                          selected={selectedFilmUrl === film.url}
+                          onClick={() => setSelectedFilmUrl(film.url)}
+                        >
+                          <ListItemText
+                            primary={film.title}
+                            secondary={`Episode ${film.episode_id}`}
+                          />
+                        </ListItemButton>
+                      </ListItem>
+                    ))}
+                  </List>
+                </CardContent>
+              </Card>
+            )}
 
-          <SelectedFilm selectedFilmUrl={selectedFilmUrl} />
-        </Stack>
+            {!isLoading && !isError && (
+              <SelectedFilm selectedFilmUrl={selectedFilmUrl} />
+            )}
+          </Stack>
       }
     </Container>
   )

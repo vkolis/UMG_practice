@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { Card, CardContent, Stack, Typography } from "@mui/material"
+import { Card, CardContent, List, ListItem, ListItemText, Typography } from "@mui/material"
 import { filmService } from "@/features/search/api"
 
 type SelectedFilmProps = {
@@ -19,7 +19,7 @@ export const SelectedFilm = ({ selectedFilmUrl }: SelectedFilmProps) => {
   }
 
   return (
-    <Card variant="outlined">
+    <Card variant="outlined" sx={{ mt: 2 }}>
       <CardContent>
         <Typography variant="h6">Film details</Typography>
 
@@ -30,14 +30,26 @@ export const SelectedFilm = ({ selectedFilmUrl }: SelectedFilmProps) => {
         )}
 
         {data && (
-          <Stack>
-            <Typography>Title: {data.title}</Typography>
-            <Typography>Episode: {data.episode_id}</Typography>
-            <Typography>Director: {data.director}</Typography>
-            <Typography>Producer: {data.producer}</Typography>
-            <Typography>Release date: {data.release_date}</Typography>
-            <Typography>Characters: {data.characters.length}</Typography>
-          </Stack>
+          <List disablePadding dense>
+            <ListItem disableGutters>
+              <ListItemText primary="Title" secondary={data.title} />
+            </ListItem>
+            <ListItem disableGutters>
+              <ListItemText primary="Episode" secondary={data.episode_id} />
+            </ListItem>
+            <ListItem disableGutters>
+              <ListItemText primary="Director" secondary={data.director} />
+            </ListItem>
+            <ListItem disableGutters>
+              <ListItemText primary="Producer" secondary={data.producer} />
+            </ListItem>
+            <ListItem disableGutters>
+              <ListItemText primary="Release date" secondary={data.release_date} />
+            </ListItem>
+            <ListItem disableGutters>
+              <ListItemText primary="Characters" secondary={data.characters.length} />
+            </ListItem>
+          </List>
         )}
       </CardContent>
     </Card>
