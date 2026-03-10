@@ -12,6 +12,7 @@ import {
 } from "@mui/material"
 import { filmService } from "@/features/search/api"
 import type { Film } from "@/features/search/api"
+import { useDebounce } from "@/shared/hooks"
 import { SearchInput, SelectedFilm } from "@/features/search/ui"
 import { useState } from "react"
 
@@ -26,7 +27,8 @@ export const ShowSearch = () => {
   })
 
   const films = data?.results ?? []
-  const normalizedInput = inputValue.trim().toLowerCase()
+  const debouncedInputValue = useDebounce(inputValue, 400)
+  const normalizedInput = debouncedInputValue.trim().toLowerCase()
 
   let filteredFilms: Film[] = []
 
