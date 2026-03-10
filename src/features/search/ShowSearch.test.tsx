@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { renderToStaticMarkup } from "react-dom/server"
-import { ShowSearch } from "./ShowSearch"
+import { ShowSearch } from "@/features/search"
 
 describe("ShowSearch", () => {
   it("renders SearchInput when films data is available", () => {
