@@ -14,12 +14,19 @@ import { filmService } from "@/features/search/api"
 import type { Film } from "@/features/search/api"
 import { useDebounce } from "@/shared/hooks"
 import { SearchHistory, SearchInput, SelectedFilm } from "@/features/search/ui"
-import { useState } from "react"
+import { useRef, useState } from "react"
+
+type SearchHistoryItem = {
+  id: number
+  url: string
+  title: string
+}
 
 export const ShowSearch = () => {
   const [inputValue, setInputValue] = useState('')
   const [selectedFilmUrl, setSelectedFilmUrl] = useState<string>('')
-  const [history, setHistory] = useState<Array<{ url: string; title: string }>>([]);
+  const [history, setHistory] = useState<SearchHistoryItem[]>([])
+  const historyIdRef = useRef(0)
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['films'],
@@ -43,13 +50,21 @@ export const ShowSearch = () => {
   }
 
   const handleFilmClick = (film: Film) => {
-  setSelectedFilmUrl(film.url);
+    setSelectedFilmUrl(film.url)
 
-  setHistory((prev) => {
-    const withoutCurrent = prev.filter((f) => f.url !== film.url);
-    return [{ url: film.url, title: film.title }, ...withoutCurrent].slice(0, 5);
-  });
-  };
+    setHistory((prev) => {
+      historyIdRef.current += 1
+      return [...prev, { id: historyIdRef.current, url: film.url, title: film.title }].slice(-5)
+    })
+  }
+
+  const handleInputValueChange = (value: string) => {
+    setInputValue(value)
+
+    if (value.trim() === '') {
+      setSelectedFilmUrl('')
+    }
+  }
 
   return (
     <Container>
@@ -58,11 +73,11 @@ export const ShowSearch = () => {
           <Stack >
             <SearchHistory 
               items={history}
-              onDelete={(url) => setHistory((prev) => prev.filter((f) => f.url !== url))}
+              onDelete={(id) => setHistory((prev) => prev.filter((f) => f.id !== id))}
               onSelect={(url) => setSelectedFilmUrl(url)}
             />
                         
-            <SearchInput inputValue={inputValue} setInputValue={setInputValue} />
+            <SearchInput inputValue={inputValue} setInputValue={handleInputValueChange} />
 
             {!isLoading && !isError && normalizedInput && filteredFilms.length > 0 && (
               <Card variant="outlined" sx={{ mt: 2 }}>

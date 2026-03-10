@@ -3,8 +3,8 @@ import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 
 interface SearchHistoryProps {
-  items: Array<{ url: string; title: string }>;
-  onDelete: (url: string) => void;
+  items: Array<{ id: number; url: string; title: string }>;
+  onDelete: (id: number) => void;
   onSelect: (url: string) => void;
 }
 
@@ -30,10 +30,10 @@ export const SearchHistory = ({ items, onDelete, onSelect }: SearchHistoryProps)
       component="ul"
     >
       {items.map((data) => (
-        <ListItem key={data.url}>
+        <ListItem key={data.id}>
           <Chip
             label={data.title}
-            onDelete={() => onDelete(data.url)}
+            onDelete={() => onDelete(data.id)}
             onClick={() => onSelect(data.url)}
           />
         </ListItem>
