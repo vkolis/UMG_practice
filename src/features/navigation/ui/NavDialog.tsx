@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { forwardRef, Fragment, type ReactElement, type Ref } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -8,38 +8,30 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import type { TransitionProps } from '@mui/material/transitions';
 
-const Transition = React.forwardRef(function Transition(
+const Transition = forwardRef(function Transition(
   props: TransitionProps & {
-    children: React.ReactElement<any, any>;
+    children: ReactElement<any, any>;
   },
-  ref: React.Ref<unknown>,
+  ref: Ref<unknown>,
 ) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="right" ref={ref} {...props} />;
 });
 
-export const NavDialog = () => {
-  const [open, setOpen] = React.useState(false);
+type NavDialogProps = {
+  isNavDialogOpen: boolean;
+  setIsNavDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+export const NavDialog = ({ isNavDialogOpen, setIsNavDialogOpen }: NavDialogProps) => {
   return (
-    <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Slide in alert dialog
-      </Button>
+    <Fragment>
       <Dialog
-        open={open}
+        open={isNavDialogOpen}
         slots={{
           transition: Transition,
         }}
         keepMounted
-        onClose={handleClose}
+        onClose={() => setIsNavDialogOpen(prev => !prev)}
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>{"Use Google's location service?"}</DialogTitle>
@@ -50,10 +42,9 @@ export const NavDialog = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose}>Agree</Button>
+          <Button onClick={() => setIsNavDialogOpen(false)}>Disagree</Button>
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </Fragment>
   );
 }

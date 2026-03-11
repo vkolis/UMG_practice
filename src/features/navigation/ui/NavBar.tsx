@@ -2,7 +2,12 @@ import { IconButton } from '@mui/material';
 import { Dashboard } from '@mui/icons-material';
 import Box from '@mui/material/Box';
 
-export const NavBar = () => {
+type NavDialogProps = {
+  isNavDialogOpen: boolean;
+  setIsNavDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const NavBar = ({ setIsNavDialogOpen, isNavDialogOpen }: NavDialogProps) => {
   return (
       <Box
         sx={{
@@ -16,8 +21,12 @@ export const NavBar = () => {
           boxShadow: "4px 0 16px rgba(0, 0, 0, 0.08)",
         }}
       >
-      <IconButton>
-        <Dashboard />
+      <IconButton 
+        onClick={() => setIsNavDialogOpen(prev => !prev)}
+        sx={{
+          color: !isNavDialogOpen ? "#1976d2" : "#000",
+        }}>
+        <Dashboard/>
       </IconButton>
     </Box>
   );
