@@ -31,9 +31,7 @@ export const useShowSearchState = ({ films }: UseShowSearchStateArgs) => {
 
     return films
       .filter(
-        (film) =>
-          film.title.toLowerCase().includes(normalizedInput) ||
-          film.opening_crawl.toLowerCase().includes(normalizedInput),
+        (film) => film.title.toLowerCase().includes(normalizedInput)
       )
       .slice(0, MAX_SEARCH_RESULTS)
   }, [films, normalizedInput])
