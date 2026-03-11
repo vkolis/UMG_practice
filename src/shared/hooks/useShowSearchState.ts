@@ -37,13 +37,13 @@ export const useShowSearchState = ({ films }: UseShowSearchStateArgs) => {
   }, [films, normalizedInput])
 
   const handleFilmClick = (film: Film) => {
+    const nextHistoryId = historyIdRef.current + 1
+
+    historyIdRef.current = nextHistoryId
     setSelectedFilmUrl(film.url)
-    setHistory((prev) => {
-      historyIdRef.current += 1
-      return [...prev, { id: historyIdRef.current, url: film.url, title: film.title }].slice(
-        -MAX_HISTORY_ITEMS,
-      )
-    })
+    setHistory((prev) =>
+      [...prev, { id: nextHistoryId, url: film.url, title: film.title }].slice(-MAX_HISTORY_ITEMS),
+    )
   }
 
   const handleInputValueChange = (value: string) => {
