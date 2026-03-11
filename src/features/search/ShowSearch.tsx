@@ -29,7 +29,7 @@ export const ShowSearch = () => {
 
   if (isLoading) {
     return (
-      <Container>
+      <Container sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
         <Loading />
       </Container>
     )
@@ -37,7 +37,7 @@ export const ShowSearch = () => {
 
   if (isError) {
     return (
-      <Container>
+      <Container sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
         <ErrorAlert message='Failed to load films' />
       </Container>
     )
