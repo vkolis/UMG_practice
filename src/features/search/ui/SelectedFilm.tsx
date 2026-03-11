@@ -1,17 +1,21 @@
 import { useQuery } from "@tanstack/react-query"
 import { Card, CardContent, List, ListItem, ListItemText, Typography } from "@mui/material"
 import { filmService } from "@/features/search/api"
+import { Loading } from "./Loading"
+import { ErrorAlert } from "./ErrorAlert"
 
 type SelectedFilmProps = {
   selectedFilmUrl: string
 }
+
+const STALE_TIME = 1000 * 60 * 10 // 10 minutes
 
 export const SelectedFilm = ({ selectedFilmUrl }: SelectedFilmProps) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['details', selectedFilmUrl],
     queryFn: () => filmService.getFilmByUrl(selectedFilmUrl),
     enabled: Boolean(selectedFilmUrl),
-    staleTime: 1000 * 60 * 10,
+    staleTime: STALE_TIME,
   })
 
   if (!selectedFilmUrl) {
@@ -23,10 +27,10 @@ export const SelectedFilm = ({ selectedFilmUrl }: SelectedFilmProps) => {
       <CardContent>
         <Typography variant="h6">Film details</Typography>
 
-        {isLoading && <Typography>Loading details...</Typography>}
+        {isLoading && <Loading />}
 
         {isError && (
-          <Typography> Failed to load selected film </Typography>
+          <ErrorAlert message='Failed to load selected film' />
         )}
 
         {data && (
