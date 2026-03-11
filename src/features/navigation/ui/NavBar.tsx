@@ -3,12 +3,12 @@ import { Dashboard } from '@mui/icons-material';
 import Box from '@mui/material/Box';
 import { NAVBAR_WIDTH } from '@/features/navigation/constants';
 
-type NavDialogProps = {
+type NavBarProps = {
   isNavDialogOpen: boolean;
-  setIsNavDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onToggle: () => void;
 }
 
-export const NavBar = ({ setIsNavDialogOpen, isNavDialogOpen }: NavDialogProps) => {
+export const NavBar = ({ onToggle, isNavDialogOpen }: NavBarProps) => {
   return (
       <Box
         sx={{
@@ -23,7 +23,7 @@ export const NavBar = ({ setIsNavDialogOpen, isNavDialogOpen }: NavDialogProps) 
         }}
       >
       <IconButton 
-        onClick={() => setIsNavDialogOpen(prev => !prev)}
+        onClick={onToggle}
         sx={{
           color: !isNavDialogOpen ? "#0004020" : "#1976d2" ,
           mt: 1,

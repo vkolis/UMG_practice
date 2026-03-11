@@ -7,11 +7,20 @@ type NavigationLayoutProps = {
 
 export const NavigationLayout = ({ children }: NavigationLayoutProps) => {
   const [isNavDialogOpen, setIsNavDialogOpen] = useState(false)
+
+  const handleNavDialogToggle = () => {
+    setIsNavDialogOpen((prev) => !prev)
+  }
+
+  const handleNavDialogClose = () => {
+    setIsNavDialogOpen(false)
+  }
+
   return (
     <>
-      <NavBar setIsNavDialogOpen={setIsNavDialogOpen} isNavDialogOpen={isNavDialogOpen}/>
+      <NavBar isNavDialogOpen={isNavDialogOpen} onToggle={handleNavDialogToggle} />
       {children}
-      <NavDialog isNavDialogOpen={isNavDialogOpen} setIsNavDialogOpen={setIsNavDialogOpen}/>
+      <NavDialog isNavDialogOpen={isNavDialogOpen} onClose={handleNavDialogClose} />
     </>
   )
 }

@@ -17,15 +17,15 @@ const Transition = forwardRef(function Transition(
 
 type NavDialogProps = {
   isNavDialogOpen: boolean;
-  setIsNavDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onClose: () => void;
 }
 
-export const NavDialog = ({ isNavDialogOpen, setIsNavDialogOpen }: NavDialogProps) => {
+export const NavDialog = ({ isNavDialogOpen, onClose }: NavDialogProps) => {
   return (
     <Fragment>
       <Dialog
         open={isNavDialogOpen}
-        onClose={() => setIsNavDialogOpen(false)}
+        onClose={onClose}
         slots={{ transition: Transition }}
         keepMounted
         sx={{
@@ -44,7 +44,7 @@ export const NavDialog = ({ isNavDialogOpen, setIsNavDialogOpen }: NavDialogProp
 
         <Box sx={{ position: "relative" }}>
           <IconButton 
-            onClick={() => setIsNavDialogOpen(false)}
+            onClick={onClose}
             sx={{
                   position: "absolute",
                   top: 16,
