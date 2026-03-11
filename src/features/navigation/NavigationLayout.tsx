@@ -1,4 +1,4 @@
-import { NavBar, NavDialog } from "@/features/navigation/ui"
+import { NavBar, NavDialog, NavigationMain } from "@/features/navigation/ui"
 import { useState } from "react"
 
 type NavigationLayoutProps = {
@@ -18,9 +18,19 @@ export const NavigationLayout = ({ children }: NavigationLayoutProps) => {
 
   return (
     <>
-      <NavBar isNavDialogOpen={isNavDialogOpen} onToggle={handleNavDialogToggle} />
-      {children}
-      <NavDialog isNavDialogOpen={isNavDialogOpen} onClose={handleNavDialogClose} />
+      <NavBar
+        isNavDialogOpen={isNavDialogOpen}
+        onToggle={handleNavDialogToggle}
+      />
+
+      <NavigationMain>
+        {children}
+      </NavigationMain>
+
+      <NavDialog
+        isNavDialogOpen={isNavDialogOpen}
+        onClose={handleNavDialogClose}
+      />
     </>
   )
 }

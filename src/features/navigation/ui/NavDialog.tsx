@@ -1,4 +1,4 @@
-import { forwardRef, Fragment, type ReactElement, type Ref } from 'react';
+import { forwardRef, type ReactElement, type Ref } from 'react';
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
 import type { TransitionProps } from '@mui/material/transitions';
@@ -35,31 +35,29 @@ export const NavDialog = ({ isNavDialogOpen, onClose }: NavDialogProps) => {
   } as const
   
   return (
-    <Fragment>
-      <Dialog
-        open={isNavDialogOpen}
-        onClose={onClose}
-        slots={{ transition: Transition }}
-        keepMounted
-        slotProps={{
-          backdrop: { sx: navDialogBackdropSx},
-          paper: { sx: navDialogPaperSx}
-        }}
-      >
+    <Dialog
+      open={isNavDialogOpen}
+      onClose={onClose}
+      slots={{ transition: Transition }}
+      keepMounted
+      slotProps={{
+        backdrop: { sx: navDialogBackdropSx},
+        paper: { sx: navDialogPaperSx}
+      }}
+    >
 
-        <Box sx={{ position: "relative" }}>
-          <IconButton 
-            onClick={onClose}
-            sx={{
-                  position: "absolute",
-                  top: 16,
-                  right: 16,
-                }}
-          >
-            <Close />
-          </IconButton>
-        </Box>
-      </Dialog>
-    </Fragment>
+      <Box sx={{ position: "relative" }}>
+        <IconButton 
+          onClick={onClose}
+          sx={{
+            position: "absolute",
+            top: 16,
+            right: 16,
+          }}
+        >
+          <Close />
+        </IconButton>
+      </Box>
+    </Dialog>
   );
 }
