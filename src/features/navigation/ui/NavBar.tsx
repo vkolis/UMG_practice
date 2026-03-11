@@ -24,7 +24,8 @@ export const NavBar = ({ setIsNavDialogOpen, isNavDialogOpen }: NavDialogProps) 
       <IconButton 
         onClick={() => setIsNavDialogOpen(prev => !prev)}
         sx={{
-          color: !isNavDialogOpen ? "#1976d2" : "#000",
+          color: !isNavDialogOpen ? "#00033" : "#1976d2" ,
+          mt: 1,
         }}>
         <Dashboard/>
       </IconButton>

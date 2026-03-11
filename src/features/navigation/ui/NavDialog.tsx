@@ -24,21 +24,21 @@ export const NavDialog = ({ isNavDialogOpen, setIsNavDialogOpen }: NavDialogProp
     <Fragment>
       <Dialog
         open={isNavDialogOpen}
-        slots={{
-          transition: Transition,
-          
-        }}
-        slotProps={{
-          paper: {
-            sx: {
-              minWidth: "90vw",
-              minHeight: "90vh",
-              borderRadius: 4,
-            }
+        onClose={() => setIsNavDialogOpen(false)}
+        slots={{ transition: Transition }}
+        keepMounted
+        sx={{
+          "& .MuiBackdrop-root": {
+            left: "50px",
+            backdropFilter: "blur(6px)",
+            backgroundColor: "rgba(15, 23, 42, 0.18)",
+          },
+          "& .MuiPaper-root": {
+            width: "min(1100px, calc(100vw - 120px))",
+            minHeight: "90vh",
+            borderRadius: 4,
           }
         }}
-        keepMounted
-        onClose={() => setIsNavDialogOpen(false)}
       >
 
         <Box sx={{ position: "relative" }}>
