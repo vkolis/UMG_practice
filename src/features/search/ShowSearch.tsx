@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import { Container, Stack } from "@mui/material"
 import { filmService } from "@/features/search/api"
 import { useShowSearchState } from "@/shared/hooks/useShowSearchState"
-import { ErrorAlert, Loading, SearchHistory, SearchInput, SearchResultsList, SelectedFilm } from "@/features/search/ui"
+import { ErrorAlert, Loading, SearchHistory, SearchInput, SearchResultsSection, SelectedFilm } from "@/features/search/ui"
 
 const STALE_TIME = 1000 * 60 * 10 // 10 minutes
 
@@ -57,13 +57,12 @@ export const ShowSearch = () => {
           setInputValue={handleInputValueChange} 
         />
 
-        {normalizedInput && (
-          <SearchResultsList
-            films={filteredFilms}
-            selectedFilmUrl={selectedFilmUrl}
-            onFilmClick={handleFilmClick}
-          />
-        )}
+        <SearchResultsSection
+          normalizedInput={normalizedInput}
+          filteredFilms={filteredFilms}
+          selectedFilmUrl={selectedFilmUrl}
+          handleFilmClick={handleFilmClick}
+        />
 
         <SelectedFilm selectedFilmUrl={selectedFilmUrl} />
       </Stack>
