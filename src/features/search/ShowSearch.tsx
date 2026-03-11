@@ -26,28 +26,47 @@ export const ShowSearch = () => {
     handleHistorySelect,
   } = useShowSearchState({ films })
 
+
+  if (isLoading) {
+    return (
+      <Container>
+        <Loading />
+      </Container>
+    )
+  }
+
+  if (isError) {
+    return (
+      <Container>
+        <ErrorAlert message='Failed to load films' />
+      </Container>
+    )
+  }
+
   return (
     <Container>
-      {isError && <ErrorAlert message='Failed to load films' />}
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <Stack>
-          <SearchHistory items={history} onDelete={handleHistoryDelete} onSelect={handleHistorySelect} />
+      <Stack>
+        <SearchHistory 
+          items={history} 
+          onDelete={handleHistoryDelete} 
+          onSelect={handleHistorySelect} 
+        />
 
-          <SearchInput inputValue={inputValue} setInputValue={handleInputValueChange} />
+        <SearchInput 
+          inputValue={inputValue} 
+          setInputValue={handleInputValueChange} 
+        />
 
-          {normalizedInput && (
-            <SearchResultsList
-              films={filteredFilms}
-              selectedFilmUrl={selectedFilmUrl}
-              onFilmClick={handleFilmClick}
-            />
-          )}
+        {normalizedInput && (
+          <SearchResultsList
+            films={filteredFilms}
+            selectedFilmUrl={selectedFilmUrl}
+            onFilmClick={handleFilmClick}
+          />
+        )}
 
-          <SelectedFilm selectedFilmUrl={selectedFilmUrl} />
-        </Stack>
-      )}
+        <SelectedFilm selectedFilmUrl={selectedFilmUrl} />
+      </Stack>
     </Container>
   )
 }
