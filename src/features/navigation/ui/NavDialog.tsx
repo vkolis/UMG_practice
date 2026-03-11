@@ -4,6 +4,7 @@ import Slide from '@mui/material/Slide';
 import type { TransitionProps } from '@mui/material/transitions';
 import { Box, IconButton } from '@mui/material';
 import { Close } from '@mui/icons-material';
+import { NAVBAR_WIDTH } from '@/features/navigation/constants';
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -29,7 +30,7 @@ export const NavDialog = ({ isNavDialogOpen, setIsNavDialogOpen }: NavDialogProp
         keepMounted
         sx={{
           "& .MuiBackdrop-root": {
-            left: "50px",
+            left: NAVBAR_WIDTH,
             backdropFilter: "blur(6px)",
             backgroundColor: "rgba(15, 23, 42, 0.18)",
           },
