@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { Card, CardContent, Container, Typography } from "@mui/material"
-import { filmService } from "@/features/search/api"
+import { filmService, SEARCH_STALE_TIME } from "@/features/search/api"
 import { Loading } from "./Loading"
 import { ErrorAlert } from "./ErrorAlert"
 import { SelectedFilmDetailsContent } from "./SelectedFilmDetailsContent"
@@ -9,14 +9,12 @@ type SelectedFilmProps = {
   selectedFilmUrl: string
 }
 
-const STALE_TIME = 1000 * 60 * 10 // 10 minutes
-
 export const SelectedFilm = ({ selectedFilmUrl }: SelectedFilmProps) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["details", selectedFilmUrl],
     queryFn: () => filmService.getFilmByUrl(selectedFilmUrl),
     enabled: Boolean(selectedFilmUrl),
-    staleTime: STALE_TIME,
+    staleTime: SEARCH_STALE_TIME,
   })
 
   if (!selectedFilmUrl) {
