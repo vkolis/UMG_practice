@@ -1,6 +1,7 @@
-import { Card, CardContent, Typography } from "@mui/material"
+import { Card, CardContent } from "@mui/material"
 import type { Film } from "@/features/search/api"
 import { SearchResultsList } from "@/features/search/ui"
+import { WarningAlert } from "./WarningAlert"
 
 type SearchResultsSectionProps = {
   normalizedInput: string
@@ -23,7 +24,7 @@ export const SearchResultsSection = ({
     return (
       <Card variant="outlined" sx={{ mt: 2 }}>
         <CardContent>
-          <Typography>No films found</Typography>
+          <WarningAlert message="No films found" />
         </CardContent>
       </Card>
     )
