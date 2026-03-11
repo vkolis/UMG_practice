@@ -12,9 +12,9 @@ export const SelectedFilmDetailsContent = ({ film }: { film: Film }) => {
   ]
 
   return (
-    <List >
+    <List disablePadding>
       {items.map((item) => (
-        <ListItem key={item.label}>
+        <ListItem key={item.label} disableGutters sx={{ px: 4 }}>
           <ListItemText primary={item.label} secondary={item.value} />
         </ListItem>
       ))}
