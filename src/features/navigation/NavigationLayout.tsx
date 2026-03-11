@@ -1,4 +1,4 @@
-import { NavBar } from "@/features/navigation/ui"
+import { NavBar, NavDialog } from "@/features/navigation/ui"
 
 type NavigationLayoutProps = {
   children: React.ReactNode
@@ -7,8 +7,9 @@ type NavigationLayoutProps = {
 export const NavigationLayout = ({ children }: NavigationLayoutProps) => {
   return (
     <>
-      <NavBar />
+      <NavBar/>
       {children}
+      <NavDialog/>
     </>
   )
 }
