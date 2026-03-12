@@ -46,6 +46,26 @@ const theme = createTheme(baseTheme, {
         },
       },
     },
+    MuiCard: {
+      defaultProps: {
+        variant: "outlined",
+      },
+      styleOverrides: {
+        root: {
+          borderRadius: baseTheme.shape.borderRadius,
+        },
+      },
+    },
+    MuiPaper: {
+      defaultProps: {
+        variant: "outlined",
+      },
+      styleOverrides: {
+        root: {
+          borderRadius: baseTheme.shape.borderRadius,
+        },
+      },
+    }
   },
 })
 

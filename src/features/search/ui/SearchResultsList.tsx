@@ -17,7 +17,7 @@ export const SearchResultsList = ({
   }
 
   return (
-    <Card variant="outlined" sx={{ mt: 2 }}>
+    <Card sx={{ mt: 2 }}>
       <CardContent>
         <List disablePadding>
           {films.map((film) => (

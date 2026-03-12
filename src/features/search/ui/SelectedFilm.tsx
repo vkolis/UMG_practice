@@ -46,7 +46,7 @@ export const SelectedFilm = ({ selectedFilmUrl }: SelectedFilmProps) => {
   }
 
   return (
-    <Card variant="outlined" sx={{ mt: 2 }}>
+    <Card sx={{ mt: 2 }}>
       <CardContent>
         <Typography variant="h6">Film details</Typography>
         {renderContent()}
