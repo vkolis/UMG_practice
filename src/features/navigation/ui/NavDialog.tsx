@@ -6,6 +6,11 @@ import { Box, IconButton } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import { NAVBAR_WIDTH } from '@/features/navigation/constants';
 
+type NavDialogProps = {
+  isNavDialogOpen: boolean;
+  onClose: () => void;
+}
+
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
     children: ReactElement;
@@ -14,11 +19,6 @@ const Transition = forwardRef(function Transition(
 ) {
   return <Slide direction="right" ref={ref} {...props} />;
 });
-
-type NavDialogProps = {
-  isNavDialogOpen: boolean;
-  onClose: () => void;
-}
 
 export const NavDialog = ({ isNavDialogOpen, onClose }: NavDialogProps) => {
   const navDialogBackdropSx = {
