@@ -2,6 +2,7 @@ import { IconButton } from '@mui/material';
 import { Dashboard } from '@mui/icons-material';
 import Box from '@mui/material/Box';
 import { NAVBAR_WIDTH } from '@/features/navigation/constants';
+import { SwitchThemeMode } from './SwitchThemeMode';
 
 type NavBarProps = {
   isNavDialogOpen: boolean;
@@ -25,6 +26,8 @@ export const NavBar = ({ onToggle, isNavDialogOpen }: NavBarProps) => {
           boxShadow: 4,
         }}
       >
+      <SwitchThemeMode />
+
       <IconButton 
         onClick={onToggle}
         sx={{
