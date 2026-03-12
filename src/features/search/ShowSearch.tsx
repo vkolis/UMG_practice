@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query"
-import { Container, Stack, Typography } from "@mui/material"
-import { filmService } from "@/features/search/api"
+import { Container, Stack } from "@mui/material"
+import { filmService, SEARCH_STALE_TIME } from "@/features/search/api"
 import { useShowSearchState } from "@/shared/hooks/useShowSearchState"
-import { SearchHistory, SearchInput, SearchResultsList, SelectedFilm } from "@/features/search/ui"
+import { ErrorAlert, Loading, SearchHistory, SearchInput, SearchResultsSection, SelectedFilm } from "@/features/search/ui"
 
 export const ShowSearch = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['films'],
     queryFn: () => filmService.getFilms(),
-    staleTime: 1000 * 60 * 10,
+    staleTime: SEARCH_STALE_TIME,
   })
 
   const films = data?.results ?? []
@@ -24,28 +24,46 @@ export const ShowSearch = () => {
     handleHistorySelect,
   } = useShowSearchState({ films })
 
+
+  if (isLoading) {
+    return (
+      <Container sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+        <Loading />
+      </Container>
+    )
+  }
+
+  if (isError) {
+    return (
+      <Container sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+        <ErrorAlert message='Failed to load films' />
+      </Container>
+    )
+  }
+
   return (
     <Container>
-      {isError && <Typography>Failed to load films</Typography>}
-      {isLoading ? (
-        <Typography>Loading...</Typography>
-      ) : (
-        <Stack>
-          <SearchHistory items={history} onDelete={handleHistoryDelete} onSelect={handleHistorySelect} />
+      <Stack>
+        <SearchHistory 
+          items={history} 
+          onDelete={handleHistoryDelete} 
+          onSelect={handleHistorySelect} 
+        />
 
-          <SearchInput inputValue={inputValue} setInputValue={handleInputValueChange} />
+        <SearchInput 
+          inputValue={inputValue} 
+          setInputValue={handleInputValueChange} 
+        />
 
-          {normalizedInput && (
-            <SearchResultsList
-              films={filteredFilms}
-              selectedFilmUrl={selectedFilmUrl}
-              onFilmClick={handleFilmClick}
-            />
-          )}
+        <SearchResultsSection
+          normalizedInput={normalizedInput}
+          filteredFilms={filteredFilms}
+          selectedFilmUrl={selectedFilmUrl}
+          handleFilmClick={handleFilmClick}
+        />
 
-          <SelectedFilm selectedFilmUrl={selectedFilmUrl} />
-        </Stack>
-      )}
+        <SelectedFilm selectedFilmUrl={selectedFilmUrl} />
+      </Stack>
     </Container>
   )
 }

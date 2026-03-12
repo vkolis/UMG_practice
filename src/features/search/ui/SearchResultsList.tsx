@@ -19,10 +19,14 @@ export const SearchResultsList = ({
   return (
     <Card variant="outlined" sx={{ mt: 2 }}>
       <CardContent>
-        <List>
+        <List disablePadding>
           {films.map((film) => (
-            <ListItem key={film.url}>
-              <ListItemButton selected={selectedFilmUrl === film.url} onClick={() => onFilmClick(film)}>
+            <ListItem key={film.url} disablePadding>
+              <ListItemButton
+                sx={{ px: 4 }}
+                selected={selectedFilmUrl === film.url}
+                onClick={() => onFilmClick(film)}
+              >
                 <ListItemText primary={film.title} secondary={`Episode ${film.episode_id}`} />
               </ListItemButton>
             </ListItem>
