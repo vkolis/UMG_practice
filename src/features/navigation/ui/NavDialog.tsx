@@ -23,14 +23,11 @@ const Transition = forwardRef(function Transition(
 export const NavDialog = ({ isNavDialogOpen, onClose }: NavDialogProps) => {
   const navDialogBackdropSx = {
     left: NAVBAR_WIDTH,
-    backdropFilter: "blur(6px)",
-    backgroundColor: "rgba(15, 23, 42, 0.18)",
   } as const
 
   const navDialogPaperSx = {
     width: "min(1100px, calc(100vw - 120px))",
     minHeight: "90vh",
-    borderRadius: 4,
     m: 0,
   } as const
   
