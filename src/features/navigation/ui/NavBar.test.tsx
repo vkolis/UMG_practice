@@ -21,7 +21,7 @@ describe("NavBar", () => {
 
     const iconButton = element.props.children as ReactElement<NavBarIconButtonProps>
 
-    expect(iconButton.props.sx.color).toBe("#64748b")
+    expect(iconButton.props.sx.color).toBe("text.secondary")
   })
 
   it("passes active color to icon button when dialog is open", () => {
@@ -32,7 +32,7 @@ describe("NavBar", () => {
 
     const iconButton = element.props.children as ReactElement<NavBarIconButtonProps>
 
-    expect(iconButton.props.sx.color).toBe("#1976d2")
+    expect(iconButton.props.sx.color).toBe("primary.main")
   })
 
   it("calls onToggle when icon button is clicked", () => {

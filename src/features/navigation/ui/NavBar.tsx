@@ -9,8 +9,7 @@ type NavBarProps = {
 }
 
 export const NavBar = ({ onToggle, isNavDialogOpen }: NavBarProps) => {
-  const inactiveIconColor = "#64748b"
-  const activeIconColor = "#1976d2"
+  const iconColor = isNavDialogOpen ? "primary.main" : "text.secondary"
 
   return (
       <Box
@@ -20,15 +19,16 @@ export const NavBar = ({ onToggle, isNavDialogOpen }: NavBarProps) => {
           left: 0,
           width: NAVBAR_WIDTH,
           height: "100vh",
-          bgcolor: "#fff",
-          borderRight: "1px solid #e0e0e0",
-          boxShadow: "4px 0 16px rgba(0, 0, 0, 0.08)",
+          bgcolor: "background.paper",
+          borderRight: 1,
+          borderColor: "divider",
+          boxShadow: 4,
         }}
       >
       <IconButton 
         onClick={onToggle}
         sx={{
-          color: !isNavDialogOpen ? inactiveIconColor : activeIconColor,
+          color: iconColor,
           mt: 1,
         }}>
         <Dashboard/>

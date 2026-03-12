@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { alpha, createTheme, ThemeProvider } from "@mui/material/styles"
 import type { ReactNode } from "react"
-import { createTheme, ThemeProvider, alpha } from '@mui/material/styles';
-import { CssBaseline } from "@mui/material";
+import { CssBaseline } from "@mui/material"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -11,18 +11,38 @@ const queryClient = new QueryClient({
   }
 })
 
-const theme = createTheme({
+const baseTheme = createTheme({
+  palette: {
+    primary: {
+      main: "#2563eb",
+    },
+    background: {
+      default: "#f8fafc",
+      paper: "#ffffff",
+    },
+    text: {
+      primary: "#0f172a",
+      secondary: "#64748b",
+    },
+    divider: "#e2e8f0",
+  },
+  shape: {
+    borderRadius: 16,
+  },
+})
+
+const theme = createTheme(baseTheme, {
   components: {
     MuiDialog: {
       styleOverrides: {
         root: {
           "& .MuiBackdrop-root": {
             backdropFilter: "blur(6px)",
-            backgroundColor: alpha("#0f172a", 0.18),
+            backgroundColor: alpha(baseTheme.palette.text.primary, 0.18),
           },
         },
         paper: {
-          borderRadius: 16,
+          borderRadius: baseTheme.shape.borderRadius,
         },
       },
     },
@@ -33,9 +53,8 @@ export const Providers = ({ children }: { children: ReactNode }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
-        <CssBaseline>
-          {children}
-        </CssBaseline>
+        <CssBaseline />
+        {children}
       </ThemeProvider>
     </QueryClientProvider>
   )
