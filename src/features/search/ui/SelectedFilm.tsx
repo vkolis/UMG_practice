@@ -4,10 +4,17 @@ import { filmService, SEARCH_STALE_TIME } from "@/features/search/api"
 import { Loading } from "./Loading"
 import { ErrorAlert } from "./ErrorAlert"
 import { SelectedFilmDetailsContent } from "./SelectedFilmDetailsContent"
+import { styled } from "@mui/material/styles"
 
 type SelectedFilmProps = {
   selectedFilmUrl: string
 }
+
+const SelectedFilmContainer = styled(Container)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  marginTop: theme.spacing(4),
+}))
 
 export const SelectedFilm = ({ selectedFilmUrl }: SelectedFilmProps) => {
   const { data, isLoading, isError } = useQuery({
@@ -24,17 +31,17 @@ export const SelectedFilm = ({ selectedFilmUrl }: SelectedFilmProps) => {
   const renderContent = () => {
     if (isLoading) {
       return (
-        <Container sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+        <SelectedFilmContainer>
           <Loading />
-        </Container>
+        </SelectedFilmContainer>
       )
     }
 
     if (isError) {
       return (
-        <Container sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+        <SelectedFilmContainer>
           <ErrorAlert message="Failed to load selected film" />
-        </Container>
+        </SelectedFilmContainer>
       )
     }
 
