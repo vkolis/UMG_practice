@@ -5,11 +5,22 @@ import type { TransitionProps } from '@mui/material/transitions';
 import { Box, IconButton } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import { NAVBAR_WIDTH } from '@/features/navigation/constants';
+import { styled } from "@mui/material/styles"
 
 type NavDialogProps = {
   isNavDialogOpen: boolean;
   onClose: () => void;
 }
+
+const DialogBox = styled(Box)({
+  position: "relative",
+})
+
+const IconButtonWrapper = styled(IconButton)({
+  position: "absolute",
+  top: 16,
+  right: 16,
+})
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -43,18 +54,11 @@ export const NavDialog = ({ isNavDialogOpen, onClose }: NavDialogProps) => {
       }}
     >
 
-      <Box sx={{ position: "relative" }}>
-        <IconButton 
-          onClick={onClose}
-          sx={{
-            position: "absolute",
-            top: 16,
-            right: 16,
-          }}
-        >
+      <DialogBox>
+        <IconButtonWrapper onClick={onClose}>
           <Close />
-        </IconButton>
-      </Box>
+        </IconButtonWrapper>
+      </DialogBox>
     </Dialog>
   );
 }
