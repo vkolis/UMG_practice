@@ -13,6 +13,17 @@ type NavBarIconButtonProps = {
 }
 
 describe("NavBar", () => {
+  it("passes inactive grey color to icon button when dialog is closed", () => {
+    const element = NavBar({
+      isNavDialogOpen: false,
+      onToggle: vi.fn(),
+    }) as ReactElement<NavBarRootProps>
+
+    const iconButton = element.props.children as ReactElement<NavBarIconButtonProps>
+
+    expect(iconButton.props.sx.color).toBe("#64748b")
+  })
+
   it("passes active color to icon button when dialog is open", () => {
     const element = NavBar({
       isNavDialogOpen: true,

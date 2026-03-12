@@ -9,6 +9,9 @@ type NavBarProps = {
 }
 
 export const NavBar = ({ onToggle, isNavDialogOpen }: NavBarProps) => {
+  const inactiveIconColor = "#64748b"
+  const activeIconColor = "#1976d2"
+
   return (
       <Box
         sx={{
@@ -25,7 +28,7 @@ export const NavBar = ({ onToggle, isNavDialogOpen }: NavBarProps) => {
       <IconButton 
         onClick={onToggle}
         sx={{
-          color: !isNavDialogOpen ? "#0004020" : "#1976d2" ,
+          color: !isNavDialogOpen ? inactiveIconColor : activeIconColor,
           mt: 1,
         }}>
         <Dashboard/>
