@@ -1,5 +1,6 @@
 import type { ReactElement } from "react"
 import { NavBar } from "@/features/navigation/ui"
+import { theme } from "@/theme/theme"
 
 type NavBarRootProps = {
   children: ReactElement<NavBarIconButtonProps>
@@ -21,7 +22,7 @@ describe("NavBar", () => {
 
     const iconButton = element.props.children as ReactElement<NavBarIconButtonProps>
 
-    expect(iconButton.props.sx.color).toBe("text.secondary")
+    expect(iconButton.props.sx.color).toBe(theme.palette.text.secondary)
   })
 
   it("passes active color to icon button when dialog is open", () => {
@@ -32,7 +33,7 @@ describe("NavBar", () => {
 
     const iconButton = element.props.children as ReactElement<NavBarIconButtonProps>
 
-    expect(iconButton.props.sx.color).toBe("primary.main")
+    expect(iconButton.props.sx.color).toBe(theme.palette.primary.main)
   })
 
   it("calls onToggle when icon button is clicked", () => {
