@@ -12,6 +12,7 @@ export const createAppTheme = (mode: ThemeValue) => {
 
   return createTheme(baseTheme,{
     palette: {
+      mode,
       primary: {
         main: baseTheme.palette.primary.main,
       },
