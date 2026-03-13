@@ -1,6 +1,6 @@
+import { alpha, createTheme } from "@mui/material/styles"
 import type { ThemeValue } from "@/providers"
-import { alpha, createTheme } from "@mui/material"
-import { baseTheme } from "@/theme"
+import { baseTheme } from "./theme"
 
 export const createAppTheme = (mode: ThemeValue) => {
   const isDark = mode === "dark"
@@ -9,8 +9,11 @@ export const createAppTheme = (mode: ThemeValue) => {
   const textPrimary = isDark ? "#f8fafc" : baseTheme.palette.text.primary
   const textSecondary = isDark ? "#cbd5e1" : baseTheme.palette.text.secondary
   const divider = isDark ? "#334155" : baseTheme.palette.divider
+  const chipBackground = isDark
+    ? alpha(baseTheme.palette.primary.main, 0.18)
+    : alpha(baseTheme.palette.primary.main, 0.08)
 
-  return createTheme(baseTheme,{
+  return createTheme(baseTheme, {
     palette: {
       mode,
       primary: {
@@ -24,9 +27,9 @@ export const createAppTheme = (mode: ThemeValue) => {
         primary: textPrimary,
         secondary: textSecondary,
       },
-      divider: divider,
+      divider
     },
-     components: {
+    components: {
       MuiDialog: {
         styleOverrides: {
           root: {
@@ -57,6 +60,19 @@ export const createAppTheme = (mode: ThemeValue) => {
         styleOverrides: {
           root: {
             borderRadius: baseTheme.shape.borderRadius,
+          },
+        },
+      },
+      MuiChip: {
+        styleOverrides: {
+          root: {
+            backgroundColor: chipBackground,
+            "& .MuiChip-deleteIcon": {
+              color: alpha(textPrimary, 0.6),
+              "&:hover": {
+                color: textPrimary,
+              },
+            },
           },
         },
       },
