@@ -22,6 +22,17 @@ const IconButtonWrapper = styled(IconButton)({
   right: 16,
 })
 
+const StyledDialog = styled(Dialog)({
+  "& .MuiBackdrop-root": {
+    left: NAVBAR_WIDTH,
+  },
+  "& .MuiPaper-root": {
+    width: "min(1100px, calc(100vw - 120px))",
+    minHeight: "90vh",
+    margin: 0,
+  },
+})
+
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
     children: ReactElement;
@@ -32,33 +43,18 @@ const Transition = forwardRef(function Transition(
 });
 
 export const NavDialog = ({ isNavDialogOpen, onClose }: NavDialogProps) => {
-  const navDialogBackdropSx = {
-    left: NAVBAR_WIDTH,
-  } as const
-
-  const navDialogPaperSx = {
-    width: "min(1100px, calc(100vw - 120px))",
-    minHeight: "90vh",
-    m: 0,
-  } as const
-  
   return (
-    <Dialog
+    <StyledDialog
       open={isNavDialogOpen}
       onClose={onClose}
       slots={{ transition: Transition }}
       keepMounted
-      slotProps={{
-        backdrop: { sx: navDialogBackdropSx},
-        paper: { sx: navDialogPaperSx}
-      }}
     >
-
       <DialogBox>
         <IconButtonWrapper onClick={onClose}>
           <Close />
         </IconButtonWrapper>
       </DialogBox>
-    </Dialog>
+    </StyledDialog>
   );
 }
