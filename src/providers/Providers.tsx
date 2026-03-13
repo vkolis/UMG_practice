@@ -3,7 +3,7 @@ import { ThemeProvider } from "@mui/material/styles"
 import { useState, type ReactNode } from "react"
 import { CssBaseline } from "@mui/material"
 import { createAppTheme } from "@/theme/createAppTheme"
-import { ThemeModeContext } from "./ThemeModeContext"
+import { ThemeModeContext, type ThemeValue } from "@/providers"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -13,9 +13,8 @@ const queryClient = new QueryClient({
   }
 })
 
-
 export const Providers = ({ children }: { children: ReactNode }) => {
-  const [mode, setMode] = useState<"light" | "dark">("light")
+  const [mode, setMode] = useState<ThemeValue>("light")
   const toggleTheme = () => {
     setMode((prev) => (prev === "light" ? "dark" : "light"))
   }
