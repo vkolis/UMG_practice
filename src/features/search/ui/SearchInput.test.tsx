@@ -5,6 +5,7 @@ type SearchInputTextFieldProps = {
   value: string
   label: string
   fullWidth: boolean
+  autoComplete: string
   onChange: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -20,6 +21,7 @@ describe("SearchInput", () => {
     expect(element.props.value).toBe("test123")
     expect(element.props.label).toBe("Type text to search...")
     expect(element.props.fullWidth).toBe(true)
+    expect(element.props.autoComplete).toBe("off")
   })
 
   it("calls setInputValue with the entered value", () => {
