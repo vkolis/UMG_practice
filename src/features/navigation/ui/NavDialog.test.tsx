@@ -1,21 +1,12 @@
 import type { ReactElement } from "react"
-import { NAVBAR_WIDTH } from "@/features/navigation/constants"
 import { NavDialog } from "@/features/navigation/ui"
 
 type NavDialogRootProps = {
   open: boolean
   onClose: () => void
-  slotProps: {
-    backdrop: {
-      sx: {
-        left: number
-      }
-    }
-    paper: {
-      sx: {
-        minHeight: string
-      }
-    }
+  keepMounted: boolean
+  slots: {
+    transition: unknown
   }
   children: ReactElement<NavDialogBoxProps>
 }
@@ -29,15 +20,15 @@ type NavDialogIconButtonProps = {
 }
 
 describe("NavDialog", () => {
-  it("passes dialog state and layout props to Dialog", () => {
+  it("passes dialog state and transition props to Dialog", () => {
     const element = NavDialog({
       isNavDialogOpen: true,
       onClose: vi.fn(),
     }) as ReactElement<NavDialogRootProps>
 
     expect(element.props.open).toBe(true)
-    expect(element.props.slotProps.backdrop.sx.left).toBe(NAVBAR_WIDTH)
-    expect(element.props.slotProps.paper.sx.minHeight).toBe("90vh")
+    expect(element.props.keepMounted).toBe(true)
+    expect(element.props.slots.transition).toBeDefined()
   })
 
   it("calls onClose when close button is clicked", () => {
