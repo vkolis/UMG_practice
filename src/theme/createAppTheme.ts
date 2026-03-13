@@ -12,6 +12,10 @@ export const createAppTheme = (mode: ThemeValue) => {
   const chipBackground = isDark
     ? alpha(baseTheme.palette.primary.main, 0.18)
     : alpha(baseTheme.palette.primary.main, 0.08)
+  const iconButtonHoverColor = baseTheme.palette.primary.main
+  const iconButtonHoverBackground = isDark
+    ? alpha(baseTheme.palette.primary.main, 0.18)
+    : alpha(baseTheme.palette.primary.main, 0.1)
 
   return createTheme(baseTheme, {
     palette: {
@@ -39,9 +43,6 @@ export const createAppTheme = (mode: ThemeValue) => {
             },
             "& .MuiIconButton-root": {
               color: textPrimary,
-              "&:hover": {
-                backgroundColor: alpha(textPrimary, isDark ? 0.12 : 0.08),
-              },
             },
           },
           paper: {
@@ -66,6 +67,16 @@ export const createAppTheme = (mode: ThemeValue) => {
         styleOverrides: {
           root: {
             borderRadius: baseTheme.shape.borderRadius,
+          },
+        },
+      },
+      MuiIconButton: {
+        styleOverrides: {
+          root: {
+            "--IconButton-hoverBg": iconButtonHoverBackground,
+            "&:hover": {
+              color: iconButtonHoverColor,
+            },
           },
         },
       },
