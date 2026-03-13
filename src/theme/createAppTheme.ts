@@ -37,6 +37,12 @@ export const createAppTheme = (mode: ThemeValue) => {
               backdropFilter: "blur(6px)",
               backgroundColor: alpha(textPrimary, isDark ? 0.32 : 0.18),
             },
+            "& .MuiIconButton-root": {
+              color: textPrimary,
+              "&:hover": {
+                backgroundColor: alpha(textPrimary, isDark ? 0.12 : 0.08),
+              },
+            },
           },
           paper: {
             borderRadius: baseTheme.shape.borderRadius,
