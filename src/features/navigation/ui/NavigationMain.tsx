@@ -1,20 +1,19 @@
-import Box from "@mui/material/Box"
 import { NAVBAR_WIDTH } from "@/features/navigation/constants"
+import { styled } from "@mui/material/styles"
 
 type NavigationMainProps = {
   children: React.ReactNode
 }
 
+const NavigationMainBox = styled("main")({
+  minHeight: "100vh",
+  marginLeft: NAVBAR_WIDTH,
+})
+
 export const NavigationMain = ({ children }: NavigationMainProps) => {
   return (
-    <Box
-      component="main"
-      sx={{
-        minHeight: "100vh",
-        ml: `${NAVBAR_WIDTH}px`,
-      }}
-    >
+    <NavigationMainBox>
       {children}
-    </Box>
+    </NavigationMainBox>
   )
 }
