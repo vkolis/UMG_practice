@@ -1,8 +1,8 @@
 import { IconButton } from '@mui/material';
 import { Dashboard } from '@mui/icons-material';
 import { NAVBAR_WIDTH } from '@/features/navigation/constants';
+import { SwitchThemeMode } from './SwitchThemeMode';
 import { styled } from "@mui/material/styles"
-import { theme } from '@/theme/theme';
 
 type NavBarProps = {
   isNavDialogOpen: boolean;
@@ -21,16 +21,15 @@ const NavBarAside = styled("aside")(({ theme }) => ({
 }))
 
 export const NavBar = ({ onToggle, isNavDialogOpen }: NavBarProps) => {
-  const iconColor = isNavDialogOpen ? theme.palette.primary.main : theme.palette.text.secondary
-
   return (
     <NavBarAside>
-      <IconButton 
-        onClick={onToggle}
-        sx={{
-          color: iconColor,
-          mt: 1,
-        }}>
+      <SwitchThemeMode />
+        <IconButton 
+          onClick={onToggle}
+          sx={(theme) => ({
+            color: isNavDialogOpen ? theme.palette.primary.main : theme.palette.text.secondary,
+            mt: 1,
+          })}>
         <Dashboard/>
       </IconButton>
     </NavBarAside>

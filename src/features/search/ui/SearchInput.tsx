@@ -10,6 +10,7 @@ export const SearchInput = ({inputValue, setInputValue}: {inputValue: string, se
         fullWidth
         label="Type text to search..." 
         variant="outlined" 
+        autoComplete="off"
         value={inputValue}
         onChange={handleInputChange}
       /> 
