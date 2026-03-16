@@ -1,2 +1,2 @@
+export { baseTheme } from "./baseTheme"
 export { createAppTheme } from "./createAppTheme"
-export * from "./theme"

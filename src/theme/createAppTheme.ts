@@ -1,6 +1,6 @@
 import { alpha, createTheme } from "@mui/material/styles"
 import type { ThemeValue } from "@/providers"
-import { baseTheme } from "./theme"
+import { baseTheme } from "./baseTheme"
 
 export const createAppTheme = (mode: ThemeValue) => {
   const isDark = mode === "dark"
