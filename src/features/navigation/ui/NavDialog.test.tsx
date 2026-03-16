@@ -1,4 +1,4 @@
-import type { ReactElement } from "react"
+import type { ReactElement, ReactNode } from "react"
 import { NavDialog } from "@/features/navigation/ui"
 
 type NavDialogRootProps = {
@@ -8,7 +8,7 @@ type NavDialogRootProps = {
   slots: {
     transition: unknown
   }
-  children: ReactElement<NavDialogBoxProps>
+  children: ReactNode
 }
 
 type NavDialogBoxProps = {
@@ -20,6 +20,12 @@ type NavDialogIconButtonProps = {
 }
 
 describe("NavDialog", () => {
+  const getDialogBox = (element: ReactElement<NavDialogRootProps>) => {
+    const children = element.props.children as ReactElement[]
+
+    return children[0] as ReactElement<NavDialogBoxProps>
+  }
+
   it("passes dialog state and transition props to Dialog", () => {
     const element = NavDialog({
       isNavDialogOpen: true,
@@ -39,7 +45,7 @@ describe("NavDialog", () => {
       onClose,
     }) as ReactElement<NavDialogRootProps>
 
-    const box = element.props.children as ReactElement<NavDialogBoxProps>
+    const box = getDialogBox(element)
     const iconButton = box.props.children as ReactElement<NavDialogIconButtonProps>
 
     iconButton.props.onClick()

@@ -6,6 +6,7 @@ import { Box, IconButton } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import { NAVBAR_WIDTH } from '@/features/navigation/constants';
 import { styled } from "@mui/material/styles"
+import { AsideForm } from '@/features/aside-form/ui';
 
 type NavDialogProps = {
   isNavDialogOpen: boolean;
@@ -55,6 +56,8 @@ export const NavDialog = ({ isNavDialogOpen, onClose }: NavDialogProps) => {
           <Close />
         </IconButtonWrapper>
       </DialogBox>
+
+      <AsideForm />
     </StyledDialog>
   );
 }
