@@ -1,8 +1,15 @@
 import { useQuery } from "@tanstack/react-query"
 import { Container, Stack } from "@mui/material"
+import { styled } from "@mui/material/styles"
 import { filmService, SEARCH_STALE_TIME } from "@/features/search/api"
 import { useShowSearchState } from "@/shared/hooks/useShowSearchState"
 import { ErrorAlert, Loading, SearchHistory, SearchInput, SearchResultsSection, SelectedFilm } from "@/features/search/ui"
+
+const StatusContainer = styled(Container)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  marginTop: theme.spacing(4),
+}))
 
 export const ShowSearch = () => {
   const { data, isLoading, isError } = useQuery({
@@ -27,17 +34,17 @@ export const ShowSearch = () => {
 
   if (isLoading) {
     return (
-      <Container sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+      <StatusContainer>
         <Loading />
-      </Container>
+      </StatusContainer>
     )
   }
 
   if (isError) {
     return (
-      <Container sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+      <StatusContainer>
         <ErrorAlert message='Failed to load films' />
-      </Container>
+      </StatusContainer>
     )
   }
 

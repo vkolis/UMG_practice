@@ -22,7 +22,7 @@ export const SearchResultsSection = ({
 
   if (filteredFilms.length === 0) {
     return (
-      <Card variant="outlined" sx={{ mt: 2 }}>
+      <Card sx={{ mt: 2 }}>
         <CardContent>
           <WarningAlert message="No films found" />
         </CardContent>
